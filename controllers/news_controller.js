@@ -4,9 +4,9 @@ var News = require("../models/news");
 
 var router = express.Router();
 
-router.get("/comments/:id", function(req, res) {
-	var id = mongoose.Types.ObjectId(req.params.id);
-	News.findOne({_id: id}, function(err, article) {
+router.get("/comments/:link", function(req, res) {
+	var link = mongoose.Types.ObjectId(req.params.link);
+	News.findOne({link: link}, function(err, article) {
 		console.log(article);
 		res.json(article);
 	})
