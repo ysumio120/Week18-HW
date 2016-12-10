@@ -11,9 +11,10 @@ router.get("/", function(req, res) {
 });
 
 router.get("/all", function(req, res) {
-	console.log(req.query);
-	console.log("retrieve");
-	News.find({}, null, {sort: {createdAt: -1}, limit: 10}, function(err, records) {
+	var page = parseInt(req.query.page);
+	var skip = page - 1;
+
+	News.find({}, null, {sort: {createdAt: -1}, limit: 10, skip: (skip *10)}, function(err, records) {
 		res.send(records);
 	});
 });
