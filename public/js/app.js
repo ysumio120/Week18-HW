@@ -1,10 +1,6 @@
 var currentPage = 1;
 
-$.get("/scrape", function() {
-
-})
-
-$(document).ready(function(){
+$.get("/scrape", function(response) {
 	$.get("/all?page=1", function(response) {
 		displayArticles(response);
 	})
@@ -30,14 +26,12 @@ $(".next, .prev").click(function() {
 		displayArticles(response);
 		
 	});
-	console.log(currentPage);
 })
 
 // Dropdown list of existing comments (load from database)
 $(document).on("click", ".commentDropBtn", function() {
 	var articleDiv = $(this).closest(".article");
 	var id = articleDiv.attr("data-id");
-	console.log(id);
 	var index = $(this).attr("value");
 	var commentsDiv = $(".commentsDiv[data-index="+ index + "]");
 	var commentsList = commentsDiv.children(".commentsList");
@@ -62,12 +56,9 @@ $(document).on("click", ".submit", function() {
 	var input = $(this).prev("input");
 	var comment = $(input).val().trim();
 	$(input).val("");
-	console.log(comment);
 	if(comment != "") {
 		var id = $(this).closest(".article").attr("data-id");
-		console.log(id);
 		$.post("/comments/" + id, {comment: comment}, function(comment) {
-			console.log(comment);
 			var commentString = comment.comment;
 			var commentID = comment._id;
 			var commentDiv = $("<div>").addClass("commentDiv");
@@ -84,7 +75,15 @@ $(document).on("click", ".submit", function() {
 
 // Removes comment from database and list
 $(document).on("click", ".glyphicon-trash", function() {
-
+	var commentDiv = $(this).parent(".commentDiv")
+	var articleID = $(this).attr("data-articleid");
+	var commentID = $(this).attr("data-commentid");
+	$.post("/comments/remove/" + articleID + "/" + commentID, function(response) {
+		if(response == "OK") {	
+			commentDiv.remove();
+			console.log("Removed");
+		}
+	});
 })
 
 
@@ -134,3 +133,10 @@ function displayComments(id, commentsList) {
 	})
 }
 
+$(document).on("mouseenter", ".glyphicon-trash", function() {
+	$(this).parent().css("background-color", "grey");
+})
+
+$(document).on("mouseleave", ".glyphicon-trash", function() {
+	$(this).parent().css("background-color", "");
+})
