@@ -3,9 +3,9 @@
 App that scrapes news from ycombinator.com and allows users to leave comments
 
 Technologies Used:
-HTML
-CSS
-Node.js
-Express
-Mongoose
-Cheerio
+HTML <br/>
+CSS <br/>
+Node.js <br/>
+Express <br/>
+Mongoose <br/>
+Cheerio <br/>
