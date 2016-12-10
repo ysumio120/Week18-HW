@@ -2,7 +2,7 @@
 
 App that scrapes news from ycombinator.com and allows users to leave comments
 
-Technologies Used:
+Technologies Used: <br/>
 HTML <br/>
 CSS <br/>
 Node.js <br/>
